@@ -1,3 +1,19 @@
+
+async function loadEntries() {
+    try {
+        const response = await fetch('entries.json');
+        const data = await response.json();
+        entries = data;
+        recalcAll();
+        renderTable();
+    } catch (e) {
+        console.error("Fehler beim Laden der Daten:", e);
+    }
+}
+
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
     recalcAll();
     renderTable();
