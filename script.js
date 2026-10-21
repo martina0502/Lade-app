@@ -15,8 +15,7 @@ async function loadEntries() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    recalcAll();
-    renderTable();
+    loadEntries();
 });
 
 let entries = [
