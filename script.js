@@ -272,10 +272,9 @@ function renderSummary() {
     document.getElementById("verbrauchDiffKW").innerText = sumKm > 0 ? ((sumDiffKW * 100) / sumKm).toFixed(2) : "0";
     document.getElementById("sumRechnKW").innerText = sumRechnKW.toFixed(2);
     document.getElementById("verbrauchRechnKW").innerText = sumKm > 0 ? ((sumRechnKW * 100) / sumKm).toFixed(2) : "0";
-    
+
     // Neue Summen
     document.getElementById("sumMin").innerText = sumMin;
-    //document.getElementById("sum€KW").innerText = sum€KW.toFixed(2);
     document.getElementById("sumDiesel").innerText = sumDiesel.toFixed(2);
     document.getElementById("sumDiffDieselKW").innerText = sumDiffDieselKW.toFixed(2);
 }
