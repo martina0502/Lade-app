@@ -157,6 +157,15 @@ function updateEntry() {
     clearForm();
 }
 
+function deleteEntry(index) {
+    if (!confirm("Diesen Eintrag wirklich löschen?")) return;
+
+    entries.splice(index, 1);
+    recalcAll();
+    renderTable();
+}
+
+
 function recalcAll() {
     for (let i = 0; i < entries.length; i++) {
         const e = entries[i];
@@ -193,7 +202,10 @@ function renderTable() {
             <td>${e.eurokw.toFixed(2)}</td>
             <td>${e.dieselKosten.toFixed(2)}</td>
             <td>${e.diffDieselKW.toFixed(2)}</td>
-            <td><button onclick="editEntry(${index})">Bearbeiten</button></td>
+            <td>
+    <button onclick="editEntry(${index})">Bearbeiten</button>
+    <button onclick="deleteEntry(${index})" style="color:red;">Löschen</button>
+</td>
         `;
 
         tbody.appendChild(row);
@@ -206,11 +218,17 @@ function renderSummary() {
     let sumDiffKW = 0;
     let sumKm = 0;
     let sumRechnKW = 0;
+    let sumMin = 0;
+    let sumDiesel = 0;
+    let sumDiffDieselKW = 0;
 
     entries.forEach(e => {
         sumDiffKW += e.diffKW;
         sumKm += e.gefahreneKm;
         sumRechnKW += e.rechnkw;
+        sumMin += e.gesamtMinuten;
+        sumDiesel += e.dieselKosten;
+        sumDiffDieselKW += e.diffDieselKW;
     });
 
     document.getElementById("sumKm").innerText = sumKm;
@@ -218,6 +236,11 @@ function renderSummary() {
     document.getElementById("verbrauchDiffKW").innerText = sumKm > 0 ? ((sumDiffKW * 100) / sumKm).toFixed(2) : "0";
     document.getElementById("sumRechnKW").innerText = sumRechnKW.toFixed(2);
     document.getElementById("verbrauchRechnKW").innerText = sumKm > 0 ? ((sumRechnKW * 100) / sumKm).toFixed(2) : "0";
+
+    // Neue Summen
+    document.getElementById("sumMin").innerText = sumMin;
+    document.getElementById("sumDiesel").innerText = sumDiesel.toFixed(2);
+    document.getElementById("sumDiffDieselKW").innerText = sumDiffDieselKW.toFixed(2);
 }
 
 function clearForm() {
