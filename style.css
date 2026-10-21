@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Scrollbare Tabelle */
+.table-wrapper {
+    width: 100%;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+#table {
+    width: max-content;
+    border-collapse: collapse;
+}
+
+#table th, #table td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    white-space: nowrap;
+}
+
+/* Scrollbare Auswertung */
+.summary-wrapper {
+    width: 100%;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+}
+
+.summary {
+    width: max-content;
+    border-collapse: collapse;
+}
+
+.summary th, .summary td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    white-space: nowrap;
+}
