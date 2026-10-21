@@ -1,0 +1,27 @@
+name: Update entries.json
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Update entries.json
+        run: |
+          echo "$DATA" > entries.json
+
+      - name: Commit changes
+        run: |
+          git config user.name "martina0502"
+          git config user.email "martina@example.com"
+          git add entries.json
+          git commit -m "Update entries.json"
+          git push
+
+    env:
+      DATA: ${{ secrets.DATA }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
