@@ -11,6 +11,27 @@ async function loadEntries() {
     }
 }
 
+async function syncEntries() {
+    const data = JSON.stringify(entries);
+
+    await fetch(
+        "https://api.github.com/repos/martina0502/lade-app/actions/workflows/update-entries.yml/dispatches",
+        {
+            method: "POST",
+            headers: {
+                "Accept": "application/vnd.github+json",
+                "Authorization": "Bearer " + GH_TOKEN
+            },
+            body: JSON.stringify({
+                ref: "main",
+                inputs: {
+                    data: data
+                }
+            })
+        }
+    );
+}
+
 
 
 
