@@ -1,1 +1,78 @@
-[]
+[
+  {
+    "datum": "2026-10-09",
+    "ort": "Sieg",
+    "vor": 0,
+    "nach": 100,
+    "diffProzent": 100,
+    "diffKW": 0,
+    "kmvor": 31145,
+    "gefahreneKm": 0,
+    "rechnkw": 0,
+    "gesamtMinuten": 0,
+    "eurokw": 0,
+    "dieselKosten": 0,
+    "diffDieselKW": 0
+  },
+  {
+    "datum": "2026-10-10",
+    "ort": "WAGO",
+    "vor": 42,
+    "nach": 87,
+    "diffProzent": 45,
+    "diffKW": 29.93,
+    "kmvor": 31335,
+    "gefahreneKm": 190,
+    "rechnkw": 33.46,
+    "gesamtMinuten": 187,
+    "eurokw": 6.69,
+    "dieselKosten": 29.79,
+    "diffDieselKW": 23.10
+  },
+  {
+    "datum": "2026-10-14",
+    "ort": "WAGO",
+    "vor": 33,
+    "nach": 83,
+    "diffProzent": 50,
+    "diffKW": 33.25,
+    "kmvor": 31518,
+    "gefahreneKm": 183,
+    "rechnkw": 36.66,
+    "gesamtMinuten": 204,
+    "eurokw": 7.33,
+    "dieselKosten": 28.69,
+    "diffDieselKW": 21.36
+  },
+  {
+    "datum": "2026-10-16",
+    "ort": "Edeka Bück CCS 0,48",
+    "vor": 72,
+    "nach": 80,
+    "diffProzent": 8,
+    "diffKW": 5.32,
+    "kmvor": 31543,
+    "gefahreneKm": 25,
+    "rechnkw": 5.2,
+    "gesamtMinuten": 9,
+    "eurokw": 2.50,
+    "dieselKosten": 3.92,
+    "diffDieselKW": 1.42
+  },
+  {
+    "datum": "2026-10-17",
+    "ort": "WAGO",
+    "vor": 76,
+    "nach": 100,
+    "diffProzent": 24,
+    "diffKW": 15.96,
+    "kmvor": 31574,
+    "gefahreneKm": 31,
+    "rechnkw": 18.91,
+    "gesamtMinuten": 114,
+    "eurokw": 3.78,
+    "dieselKosten": 4.86,
+    "diffDieselKW": 1.08
+  }
+]
+
