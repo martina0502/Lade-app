@@ -76,19 +76,20 @@ function renderSummary() {
         sumDiffDieselKW += e.diffDieselKW;
     });
 
-    // ⭐ Neue Summen
+    // Neue Summen
     let sumEuroKW = entries.reduce((sum, e) => sum + e.eurokw, 0);
     let sumStunden = (sumMin / 60).toFixed(2);
+    let avgVerbrauchKWh100km = sumKm > 0 ? ((sumRechnKW / sumKm) * 100).toFixed(2) : 0;
 
     const summaryDiv = document.getElementById("summary");
     summaryDiv.innerHTML = `
         <p><strong>Summe kWh:</strong> ${sumRechnKW.toFixed(2)}</p>
-        <p><strong>Summe € kW:</strong> ${sumEuroKW.toFixed(2)}</p>
-        <p><strong>Gesamtladedauer:</strong> ${sumMin} Minuten</p>
-        <p><strong>Gesamtladedauer:</strong> ${sumStunden} Stunden</p>
+        <p><strong>Summe € kW:</strong> ${sumEuroKW.toFixed(2)}</p>
+        <p><strong>Durchschnittlicher Verbrauch:</strong> ${avgVerbrauchKWh100km} kWh / 100 km</p>
+        <p><strong>Gesamtladedauer:</strong> ${sumStunden} Stunden</p>
         <p><strong>Gefahrene Kilometer:</strong> ${sumKm}</p>
         <p><strong>Dieselkosten gesamt:</strong> ${sumDiesel.toFixed(2)}</p>
-        <p><strong>Diesel kW Differenz:</strong> ${sumDiffDieselKW.toFixed(2)}</p>
+        <p><strong>Diesel kW Differenz:</strong> ${sumDiffDieselKW.toFixed(2)}</p>
     `;
 }
 
