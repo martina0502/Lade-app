@@ -6,6 +6,7 @@ async function loadEntries() {
         entries = data;
         recalcAll();
         renderTable();
+        renderSummary();
     } catch (e) {
         console.error("Fehler beim Laden der Daten:", e);
     }
