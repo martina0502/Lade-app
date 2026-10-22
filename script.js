@@ -1,4 +1,5 @@
 let entries = [];
+let editIndex = null;
 
 // ---------------------------------------------------------
 // Daten laden
@@ -27,7 +28,7 @@ function addNewEntry() {
     const eurokw = Number(document.getElementById("eurokw").value);
 
     const diffProzent = nach - vor;
-    const diffKW = (diffProzent / 100) * 77; // Beispiel: 77 kWh Batterie
+    const diffKW = (diffProzent / 100) * 77;
     const gefahreneKm = kmvor;
     const rechnkw = diffKW;
     const dieselKosten = diffKW * 0.20;
@@ -50,6 +51,73 @@ function addNewEntry() {
     };
 
     entries.push(newEntry);
+    renderTable();
+    renderSummary();
+}
+
+// ---------------------------------------------------------
+// Eintrag bearbeiten
+// ---------------------------------------------------------
+function editEntry(index) {
+    const e = entries[index];
+    editIndex = index;
+
+    document.getElementById("datum").value = e.datum;
+    document.getElementById("ort").value = e.ort;
+    document.getElementById("vor").value = e.vor;
+    document.getElementById("nach").value = e.nach;
+    document.getElementById("kmvor").value = e.kmvor;
+    document.getElementById("minuten").value = e.gesamtMinuten;
+    document.getElementById("eurokw").value = e.eurokw;
+
+    const btn = document.getElementById("saveBtn");
+    btn.textContent = "Änderungen speichern";
+    btn.onclick = saveEditedEntry;
+}
+
+// ---------------------------------------------------------
+// Änderungen speichern
+// ---------------------------------------------------------
+function saveEditedEntry() {
+    if (editIndex === null) return;
+
+    const datum = document.getElementById("datum").value;
+    const ort = document.getElementById("ort").value;
+    const vor = Number(document.getElementById("vor").value);
+    const nach = Number(document.getElementById("nach").value);
+    const kmvor = Number(document.getElementById("kmvor").value);
+    const minuten = Number(document.getElementById("minuten").value);
+    const eurokw = Number(document.getElementById("eurokw").value);
+
+    const diffProzent = nach - vor;
+    const diffKW = (diffProzent / 100) * 77;
+    const gefahreneKm = kmvor;
+    const rechnkw = diffKW;
+    const dieselKosten = diffKW * 0.20;
+    const diffDieselKW = dieselKosten - eurokw;
+
+    entries[editIndex] = {
+        datum,
+        ort,
+        vor,
+        nach,
+        diffProzent,
+        diffKW,
+        kmvor,
+        gefahreneKm,
+        rechnkw,
+        gesamtMinuten: minuten,
+        eurokw,
+        dieselKosten,
+        diffDieselKW
+    };
+
+    editIndex = null;
+
+    const btn = document.getElementById("saveBtn");
+    btn.textContent = "Eintrag speichern";
+    btn.onclick = addNewEntry;
+
     renderTable();
     renderSummary();
 }
@@ -88,6 +156,7 @@ function renderTable() {
             <td>${e.dieselKosten.toFixed(2)}</td>
             <td>${e.diffDieselKW.toFixed(2)}</td>
             <td>
+                <button onclick="editEntry(${index})">Bearbeiten</button>
                 <button onclick="deleteEntry(${index})">Löschen</button>
             </td>
         `;

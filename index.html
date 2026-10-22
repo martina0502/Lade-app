@@ -31,7 +31,7 @@
             border: 1px solid #ccc;
         }
         button {
-            margin-top: 10px;
+            margin: 3px;
         }
     </style>
 </head>
@@ -40,7 +40,7 @@
 
 <h1>Lade-App</h1>
 
-<h3>Neuen Eintrag hinzufügen</h3>
+<h3>Neuen Eintrag hinzufügen / bearbeiten</h3>
 
 <label>Datum:</label>
 <input type="date" id="datum"><br><br>
@@ -63,7 +63,7 @@
 <label>€ pro kW:</label>
 <input type="number" id="eurokw" step="0.01"><br><br>
 
-<button onclick="addNewEntry()">Eintrag speichern</button>
+<button id="saveBtn" onclick="addNewEntry()">Eintrag speichern</button>
 
 <hr>
 
