@@ -2,88 +2,91 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Lade-App</title>
-
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
-
-    <!-- iPhone Fullscreen -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <link rel="apple-touch-icon" href="icon-192.png">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="style.css">
+    <title>Lade‑App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #e9ecef;
+        }
+        #summary {
+            margin-top: 25px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
+    <h1>Lade‑App</h1>
 
-<h1>Lade-App</h1>
+    <!-- Eingabebereich -->
+    <div id="inputArea">
+        <label>Datum:</label>
+        <input type="date" id="datum"><br><br>
 
-<form id="ladeForm">
-    <label>Datum: <input type="date" id="datum"></label>
-    <label>Ort: <input type="text" id="ort"></label>
-    <label>% Vor Laden: <input type="number" id="vor" min="0" max="100"></label>
-    <label>% Nach Laden: <input type="number" id="nach" min="0" max="100"></label>
-    <label>Km vor Ladung: <input type="number" id="kmvor"></label>
-    <label>Rechn. kW: <input type="number" id="rechnkw" step="0.01"></label>
-    <label>Ladedauer Stunden: <input type="number" id="stunden"></label>
-    <label>Ladedauer Minuten: <input type="number" id="minuten"></label>
-    <label>€ kW Ladung: <input type="number" id="eurokw" step="0.01"></label>
+        <label>Ort:</label>
+        <input type="text" id="ort"><br><br>
 
-    <button type="button" onclick="addEntry()">Eintrag speichern</button>
-</form>
+        <label>Vor Laden:</label>
+        <input type="number" id="vor"><br><br>
 
-<h2>Gespeicherte Ladevorgänge</h2>
+        <label>Nach Laden:</label>
+        <input type="number" id="nach"><br><br>
 
-<div class="table-wrapper">
-    <table id="table">
+        <label>Km vor Laden:</label>
+        <input type="number" id="kmvor"><br><br>
+
+        <label>Gesamtminuten:</label>
+        <input type="number" id="minuten"><br><br>
+
+        <label>€ kW:</label>
+        <input type="number" id="eurokw" step="0.01"><br><br>
+
+        <button onclick="addNewEntry()">Eintrag hinzufügen</button>
+    </div>
+
+    <!-- Tabelle -->
+    <table>
         <thead>
             <tr>
                 <th>Datum</th>
                 <th>Ort</th>
-                <th>% Vor</th>
-                <th>% Nach</th>
-                <th>% Diff</th>
-                <th>Diff kW</th>
-                <th>Km vor</th>
-                <th>Gef. km</th>
-                <th>Rechn. kW</th>
-                <th>Ladedauer</th>
-                <th>€ kW</th>
-                <th>€ Diesel</th>
-                <th>€ Diff Diesel/kW</th>
-                <th>Bearbeiten</th>
+                <th>Vor</th>
+                <th>Nach</th>
+                <th>%</th>
+                <th>kW‑Diff</th>
+                <th>Km</th>
+                <th>Rechn‑kW</th>
+                <th>Minuten</th>
+                <th>€ kW</th>
+                <th>Diesel</th>
+                <th>Diesel‑Diff</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody id="tableBody"></tbody>
     </table>
-</div>
 
-<h2>Auswertung</h2>
+    <!-- Auswertung -->
+    <div id="summary"></div>
 
-<div class="summary-wrapper">
-    <table class="summary">
-        <tr><th>Summe gefahrene km</th><td id="sumKm"></td></tr>
-        <tr><th>Summe Diff kW</th><td id="sumDiffKW"></td></tr>
-        <tr><th>Ø Verbrauch Diff kW</th><td id="verbrauchDiffKW"></td></tr>
-        <tr><th>Summe Rechn. kW</th><td id="sumRechnKW"></td></tr>
-        <tr><th>Ø Verbrauch Rechn. kW</th><td id="verbrauchRechnKW"></td></tr>
-<tr><th>Gesamt Ladedauer (Min)</th><td id="sumMin"></td></tr>
-<tr><th>Summe € Diesel</th><td id="sumDiesel"></td></tr>
-<tr><th>Summe € Diff Diesel/kW</th><td id="sumDiffDieselKW"></td></tr>
-
-    </table>
-</div>
-
-<script src="script.js"></script>
-
-<!-- PWA Service Worker -->
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
-}
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
