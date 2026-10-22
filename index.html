@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lade‑App</title>
+    <title>Lade-App</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            background-color: #f8f9fa;
-        }
-        h1 {
-            color: #333;
+            background: #f7f7f7;
         }
         table {
             width: 100%;
@@ -20,73 +18,82 @@
         }
         th, td {
             border: 1px solid #ccc;
-            padding: 6px 8px;
+            padding: 6px;
             text-align: center;
         }
         th {
-            background-color: #e9ecef;
+            background: #eaeaea;
         }
         #summary {
-            margin-top: 25px;
-            padding: 10px;
-            background-color: #fff;
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
             border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 10px;
         }
     </style>
 </head>
+
 <body>
-    <h1>Lade‑App</h1>
 
-    <!-- Eingabebereich -->
-    <div id="inputArea">
-        <label>Datum:</label>
-        <input type="date" id="datum"><br><br>
+<h1>Lade-App</h1>
 
-        <label>Ort:</label>
-        <input type="text" id="ort"><br><br>
+<h3>Neuen Eintrag hinzufügen</h3>
 
-        <label>Vor Laden:</label>
-        <input type="number" id="vor"><br><br>
+<label>Datum:</label>
+<input type="date" id="datum"><br><br>
 
-        <label>Nach Laden:</label>
-        <input type="number" id="nach"><br><br>
+<label>Ort:</label>
+<input type="text" id="ort"><br><br>
 
-        <label>Km vor Laden:</label>
-        <input type="number" id="kmvor"><br><br>
+<label>% vor Ladung:</label>
+<input type="number" id="vor"><br><br>
 
-        <label>Gesamtminuten:</label>
-        <input type="number" id="minuten"><br><br>
+<label>% nach Ladung:</label>
+<input type="number" id="nach"><br><br>
 
-        <label>€ kW:</label>
-        <input type="number" id="eurokw" step="0.01"><br><br>
+<label>KM vor Ladung:</label>
+<input type="number" id="kmvor"><br><br>
 
-        <button onclick="addNewEntry()">Eintrag hinzufügen</button>
-    </div>
+<label>Ladedauer (Minuten):</label>
+<input type="number" id="minuten"><br><br>
 
-    <!-- Tabelle -->
-    <table>
-        <thead>
-            <tr>
-                <th>Datum</th>
-                <th>Ort</th>
-                <th>Vor</th>
-                <th>Nach</th>
-                <th>%</th>
-                <th>kW‑Diff</th>
-                <th>Km</th>
-                <th>Rechn‑kW</th>
-                <th>Minuten</th>
-                <th>€ kW</th>
-                <th>Diesel</th>
-                <th>Diesel‑Diff</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-    </table>
+<label>€ pro kW:</label>
+<input type="number" id="eurokw" step="0.01"><br><br>
 
-    <!-- Auswertung -->
-    <div id="summary"></div>
+<button onclick="addNewEntry()">Eintrag speichern</button>
 
-    <script src="script.js"></script>
+<hr>
+
+<h3>Alle Ladevorgänge</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Ort</th>
+            <th>% vor</th>
+            <th>% nach</th>
+            <th>% Diff</th>
+            <th>Diff kW</th>
+            <th>KM vor Ladung</th>
+            <th>Gefahrene KM</th>
+            <th>Rechn. kW</th>
+            <th>Ladedauer Min.</th>
+            <th>€ kW</th>
+            <th>Diesel</th>
+            <th>Diesel-Diff</th>
+            <th>Aktion</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+<div id="summary"></div>
+
+<script src="script.js"></script>
+
 </body>
 </html>

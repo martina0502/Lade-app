@@ -5,26 +5,62 @@ let entries = [];
 // ---------------------------------------------------------
 async function loadEntries() {
     try {
-        const response = await fetch('entries.json');
-        const data = await response.json();
-        entries = data;
-
-        recalcAll();
+        const response = await fetch("entries.json");
+        entries = await response.json();
         renderTable();
         renderSummary();
     } catch (e) {
-        console.error("Fehler beim Laden der Daten:", e);
+        console.error("Fehler beim Laden:", e);
     }
 }
 
 // ---------------------------------------------------------
-// Alle Werte neu berechnen (falls nötig)
+// Neuen Eintrag hinzufügen
 // ---------------------------------------------------------
-function recalcAll() {
-    entries.forEach(e => {
-        // Falls du später Berechnungen ergänzen willst
-        // bleibt diese Funktion dafür zuständig.
-    });
+function addNewEntry() {
+    const datum = document.getElementById("datum").value;
+    const ort = document.getElementById("ort").value;
+    const vor = Number(document.getElementById("vor").value);
+    const nach = Number(document.getElementById("nach").value);
+    const kmvor = Number(document.getElementById("kmvor").value);
+    const minuten = Number(document.getElementById("minuten").value);
+    const eurokw = Number(document.getElementById("eurokw").value);
+
+    const diffProzent = nach - vor;
+    const diffKW = (diffProzent / 100) * 77; // Beispiel: 77 kWh Batterie
+    const gefahreneKm = kmvor;
+    const rechnkw = diffKW;
+    const dieselKosten = diffKW * 0.20;
+    const diffDieselKW = dieselKosten - eurokw;
+
+    const newEntry = {
+        datum,
+        ort,
+        vor,
+        nach,
+        diffProzent,
+        diffKW,
+        kmvor,
+        gefahreneKm,
+        rechnkw,
+        gesamtMinuten: minuten,
+        eurokw,
+        dieselKosten,
+        diffDieselKW
+    };
+
+    entries.push(newEntry);
+    renderTable();
+    renderSummary();
+}
+
+// ---------------------------------------------------------
+// Eintrag löschen
+// ---------------------------------------------------------
+function deleteEntry(index) {
+    entries.splice(index, 1);
+    renderTable();
+    renderSummary();
 }
 
 // ---------------------------------------------------------
@@ -43,13 +79,17 @@ function renderTable() {
             <td>${e.vor}</td>
             <td>${e.nach}</td>
             <td>${e.diffProzent}</td>
-            <td>${e.diffKW}</td>
+            <td>${e.diffKW.toFixed(2)}</td>
+            <td>${e.kmvor}</td>
             <td>${e.gefahreneKm}</td>
-            <td>${e.rechnkw}</td>
+            <td>${e.rechnkw.toFixed(2)}</td>
             <td>${e.gesamtMinuten}</td>
-            <td>${e.eurokw}</td>
-            <td>${e.dieselKosten}</td>
-            <td>${e.diffDieselKW}</td>
+            <td>${e.eurokw.toFixed(2)}</td>
+            <td>${e.dieselKosten.toFixed(2)}</td>
+            <td>${e.diffDieselKW.toFixed(2)}</td>
+            <td>
+                <button onclick="deleteEntry(${index})">Löschen</button>
+            </td>
         `;
 
         tableBody.appendChild(row);
@@ -57,7 +97,7 @@ function renderTable() {
 }
 
 // ---------------------------------------------------------
-// Auswertung rendern (mit deinen neuen Erweiterungen)
+// Auswertung rendern
 // ---------------------------------------------------------
 function renderSummary() {
     let sumDiffKW = 0;
@@ -76,7 +116,6 @@ function renderSummary() {
         sumDiffDieselKW += e.diffDieselKW;
     });
 
-    // Neue Summen
     let sumEuroKW = entries.reduce((sum, e) => sum + e.eurokw, 0);
     let sumStunden = (sumMin / 60).toFixed(2);
     let avgVerbrauchKWh100km = sumKm > 0 ? ((sumRechnKW / sumKm) * 100).toFixed(2) : 0;
@@ -84,26 +123,13 @@ function renderSummary() {
     const summaryDiv = document.getElementById("summary");
     summaryDiv.innerHTML = `
         <p><strong>Summe kWh:</strong> ${sumRechnKW.toFixed(2)}</p>
-        <p><strong>Summe € kW:</strong> ${sumEuroKW.toFixed(2)}</p>
-        <p><strong>Durchschnittlicher Verbrauch:</strong> ${avgVerbrauchKWh100km} kWh / 100 km</p>
-        <p><strong>Gesamtladedauer:</strong> ${sumStunden} Stunden</p>
+        <p><strong>Summe € kW:</strong> ${sumEuroKW.toFixed(2)}</p>
+        <p><strong>Durchschnittlicher Verbrauch:</strong> ${avgVerbrauchKWh100km} kWh / 100 km</p>
+        <p><strong>Gesamtladedauer:</strong> ${sumStunden} Stunden</p>
         <p><strong>Gefahrene Kilometer:</strong> ${sumKm}</p>
         <p><strong>Dieselkosten gesamt:</strong> ${sumDiesel.toFixed(2)}</p>
-        <p><strong>Diesel kW Differenz:</strong> ${sumDiffDieselKW.toFixed(2)}</p>
+        <p><strong>Diesel-Diff gesamt:</strong> ${sumDiffDieselKW.toFixed(2)}</p>
     `;
 }
 
-// ---------------------------------------------------------
-// Neuer Eintrag hinzufügen (falls du das nutzt)
-// ---------------------------------------------------------
-function addEntry(newEntry) {
-    entries.push(newEntry);
-    recalcAll();
-    renderTable();
-    renderSummary();
-}
-
-// ---------------------------------------------------------
-// Start
-// ---------------------------------------------------------
 loadEntries();
