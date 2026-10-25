@@ -11,41 +11,25 @@ window.addEventListener("DOMContentLoaded", loadEntries);
 // ---------------------------------------------------------
 async function loadEntries() {
     try {
-        const response = await fetch("entries.json?cb=" + Date.now(), {
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        });
+        console.log("loadEntries gestartet");
+
+        const response = await fetch("entries.json?cb=" + Date.now());
+        console.log("Response:", response.status, response.ok);
 
         if (!response.ok) {
             throw new Error("entries.json konnte nicht geladen werden");
         }
 
-        let data = await response.json();
+        const data = await response.json();
+        console.log("Geladene Daten:", data);
 
-        // JSON automatisch in Array umwandeln
-        if (!Array.isArray(data)) {
-            data = [data];
-        }
+        // Sicherstellen, dass es ein Array ist
+        const arr = Array.isArray(data) ? data : [data];
+        console.log("Array-Daten:", arr);
 
-        // fehlende Felder automatisch ergänzen
-        data = data.map(entry => ({
-            datum: entry.datum || "",
-            ort: entry.ort || "",
-            vor: entry.vor || 0,
-            nach: entry.nach || 0,
-            diff: (entry.nach ?? 0) - (entry.vor ?? 0),
-            diffkw: ((entry.nach ?? 0) - (entry.vor ?? 0)) * 0.6,
-            kmvor: entry.kmvor || 0,
-            gefahreneKm: entry.gefahreneKm || 0,
-            rechnkw: entry.rechnkw || 0,
-            ladezeit: entry.ladezeit || "",
-            eurokw: entry.eurokw || 0,
-            diesel: entry.diesel || 0
-        }));
+        entries = arr;
 
-        entries = data;
+        console.log("entries im Script:", entries);
 
         renderTable();
         renderSummary();
