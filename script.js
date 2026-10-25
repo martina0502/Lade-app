@@ -82,6 +82,59 @@ function addNewEntry() {
     const diff = nach - vor;
     const diffkw = diff * 0.6; // falls du echten Wert willst, sag Bescheid
 
+// ------------------
+function renderTable() {
+    const tbody = document.getElementById("tableBody");
+    tbody.innerHTML = "";
+
+    entries.forEach((e, index) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${e.datum}</td>
+            <td>${e.ort}</td>
+            <td>${e.vor}</td>
+            <td>${e.nach}</td>
+            <td>${e.diff}</td>
+            <td>${e.diffkw.toFixed(2)}</td>
+            <td>${e.kmvor}</td>
+            <td>${e.gefahreneKm}</td>
+            <td>${e.rechnkw}</td>
+            <td>${e.ladezeit}</td>
+            <td>${e.eurokw}</td>
+            <td>${e.diesel}</td>
+            <td><button onclick="deleteEntry(${index})">Löschen</button></td>
+        `;
+
+        tbody.appendChild(row);
+    });
+}
+
+function renderSummary() {
+    let totalKm = entries.reduce((sum, e) => sum + e.gefahreneKm, 0);
+    let totalDiesel = entries.reduce((sum, e) => sum + Number(e.diesel), 0);
+
+    document.getElementById("summary").innerHTML = `
+        <h3>Zusammenfassung</h3>
+        <p>Gesamt gefahrene KM: <b>${totalKm}</b></p>
+        <p>Gesamt Diesel €: <b>${totalDiesel.toFixed(2)}</b></p>
+    `;
+}
+
+
+function deleteEntry(index) {
+    entries.splice(index, 1);
+    renderTable();
+    renderSummary();
+}
+
+
+
+
+// ------------------
+
+
+
     // ---------------------------------------------------------
     // Eintrag erzeugen
     // ---------------------------------------------------------
