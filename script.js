@@ -1,7 +1,10 @@
-loadEntries();
-
 let entries = [];
 let editIndex = null;
+
+// ---------------------------------------------------------
+// WICHTIG: Erst laden, wenn DOM fertig ist
+// ---------------------------------------------------------
+window.addEventListener("DOMContentLoaded", loadEntries);
 
 // ---------------------------------------------------------
 // Daten laden (GitHub Pages kompatibel)
@@ -19,14 +22,30 @@ async function loadEntries() {
             throw new Error("entries.json konnte nicht geladen werden");
         }
 
-        const data = await response.json();
+        let data = await response.json();
 
         // JSON automatisch in Array umwandeln
-        if (Array.isArray(data)) {
-            entries = data;
-        } else {
-            entries = [data];
+        if (!Array.isArray(data)) {
+            data = [data];
         }
+
+        // fehlende Felder automatisch ergänzen
+        data = data.map(entry => ({
+            datum: entry.datum || "",
+            ort: entry.ort || "",
+            vor: entry.vor || 0,
+            nach: entry.nach || 0,
+            diff: (entry.nach ?? 0) - (entry.vor ?? 0),
+            diffkw: ((entry.nach ?? 0) - (entry.vor ?? 0)) * 0.6,
+            kmvor: entry.kmvor || 0,
+            gefahreneKm: entry.gefahreneKm || 0,
+            rechnkw: entry.rechnkw || 0,
+            ladezeit: entry.ladezeit || "",
+            eurokw: entry.eurokw || 0,
+            diesel: entry.diesel || 0
+        }));
+
+        entries = data;
 
         renderTable();
         renderSummary();
