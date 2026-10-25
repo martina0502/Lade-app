@@ -11,25 +11,17 @@ window.addEventListener("DOMContentLoaded", loadEntries);
 // ---------------------------------------------------------
 async function loadEntries() {
     try {
-        console.log("loadEntries gestartet");
-
-        const response = await fetch("entries.json?cb=" + Date.now());
-        console.log("Response:", response.status, response.ok);
+        const response = await fetch("entries.json?cb=" + Date.now(), {
+            method: "GET",
+            headers: { "Accept": "application/json" }
+        });
 
         if (!response.ok) {
             throw new Error("entries.json konnte nicht geladen werden");
         }
 
         const data = await response.json();
-        console.log("Geladene Daten:", data);
-
-        // Sicherstellen, dass es ein Array ist
-        const arr = Array.isArray(data) ? data : [data];
-        console.log("Array-Daten:", arr);
-
-        entries = arr;
-
-        console.log("entries im Script:", entries);
+        entries = Array.isArray(data) ? data : [data];
 
         renderTable();
         renderSummary();
@@ -74,25 +66,27 @@ function addNewEntry() {
     const dieselEuro = gefahreneKm * verbrauchProKm * dieselPreis;
 
     // Ladezeit
-    const ladezeit = `${stunden}h ${minuten}m`;
+    const gesamtMinuten = stunden * 60 + minuten;
 
-    // % Differenz
-    const diff = nach - vor;
-    const diffkw = diff * 0.6;
+    // Differenzen
+    const diffProzent = nach - vor;
+    const diffKW = diffProzent * 0.6;
+    const diffDieselKW = diffKW - dieselEuro;
 
     const newEntry = {
         datum,
         ort,
         vor,
         nach,
-        diff,
-        diffkw,
+        diffProzent,
+        diffKW,
         kmvor,
         gefahreneKm,
         rechnkw,
-        ladezeit,
+        gesamtMinuten,
         eurokw,
-        diesel: dieselEuro.toFixed(2)
+        dieselKosten: dieselEuro.toFixed(2),
+        diffDieselKW: diffDieselKW.toFixed(2)
     };
 
     entries.push(newEntry);
@@ -111,19 +105,19 @@ function renderTable() {
         const row = document.createElement("tr");
 
         row.innerHTML = `
-            <td>${e.datum}</td>
-            <td>${e.ort}</td>
-            <td>${e.vor}</td>
-            <td>${e.nach}</td>
-            <td>${e.diff}</td>
-            <td>${Number(e.diffkw || 0).toFixed(2)}</td>
-
-            <td>${e.kmvor}</td>
-            <td>${e.gefahreneKm}</td>
-            <td>${e.rechnkw}</td>
-            <td>${e.ladezeit}</td>
-            <td>${e.eurokw}</td>
-            <td>${e.diesel}</td>
+            <td>${e.datum ?? ""}</td>
+            <td>${e.ort ?? ""}</td>
+            <td>${e.vor ?? 0}</td>
+            <td>${e.nach ?? 0}</td>
+            <td>${e.diffProzent ?? 0}</td>
+            <td>${Number(e.diffKW ?? 0).toFixed(2)}</td>
+            <td>${e.kmvor ?? 0}</td>
+            <td>${e.gefahreneKm ?? 0}</td>
+            <td>${e.rechnkw ?? 0}</td>
+            <td>${minutesToTimeString(e.gesamtMinuten ?? 0)}</td>
+            <td>${e.eurokw ?? 0}</td>
+            <td>${Number(e.dieselKosten ?? 0).toFixed(2)}</td>
+            <td>${Number(e.diffDieselKW ?? 0).toFixed(2)}</td>
             <td><button onclick="deleteEntry(${index})">Löschen</button></td>
         `;
 
@@ -135,8 +129,8 @@ function renderTable() {
 // Zusammenfassung anzeigen
 // ---------------------------------------------------------
 function renderSummary() {
-    let totalKm = entries.reduce((sum, e) => sum + e.gefahreneKm, 0);
-    let totalDiesel = entries.reduce((sum, e) => sum + Number(e.diesel), 0);
+    const totalKm = entries.reduce((sum, e) => sum + (e.gefahreneKm ?? 0), 0);
+    const totalDiesel = entries.reduce((sum, e) => sum + Number(e.dieselKosten ?? 0), 0);
 
     document.getElementById("summary").innerHTML = `
         <h3>Zusammenfassung</h3>
