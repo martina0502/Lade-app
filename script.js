@@ -120,6 +120,10 @@ function renderTable() {
     tbody.innerHTML = "";
 
     entries.forEach((e, index) => {
+
+        // Differenz Diesel € - € kWh
+        const diffAktion = (Number(e.dieselKosten ?? 0) - Number(e.eurokw ?? 0)).toFixed(2);
+
         const row = document.createElement("tr");
 
         row.innerHTML = `
@@ -136,6 +140,11 @@ function renderTable() {
             <td>${e.eurokw ?? 0}</td>
             <td>${Number(e.dieselKosten ?? 0).toFixed(2)}</td>
             <td>${Number(e.diffDieselKW ?? 0).toFixed(2)}</td>
+
+            <!-- NEU: Aktion = Diesel € - € kWh -->
+            <td>${diffAktion}</td>
+
+            <!-- Löschen bleibt erhalten -->
             <td><button onclick="deleteEntry(${index})">Löschen</button></td>
         `;
 
@@ -152,7 +161,7 @@ function renderSummary() {
     const totalKm = entries.reduce((sum, e) => sum + (e.gefahreneKm ?? 0), 0);
     const totalDiesel = entries.reduce((sum, e) => sum + Number(e.dieselKosten ?? 0), 0);
 
-    // *** KORREKT: Rechn. kWh verwenden ***
+    // Rechn. kWh
     const totalRechnKW = entries.reduce((sum, e) => sum + Number(e.rechnkw ?? 0), 0);
 
     // Summe € kWh
@@ -165,11 +174,18 @@ function renderSummary() {
     // Diesel-Diff gesamt
     const totalDiffDieselKW = entries.reduce((sum, e) => sum + Number(e.diffDieselKW ?? 0), 0);
 
-    // *** Verbrauch kWh/100 km — KORREKT ***
+    // Durchschnittlicher Verbrauch (kWh/100 km)
     const avgConsumptionKWh = totalKm > 0 ? (totalRechnKW * 100) / totalKm : 0;
 
-    // *** Verbrauch € kWh / 100 km — KORREKT ***
+    // Durchschnittlicher Verbrauch (€ kWh / 100 km)
     const avgConsumptionEuro = totalKm > 0 ? (totalEuroKW * 100) / totalKm : 0;
+
+    // *** NEU: Summe Aktion (Diesel € - € kWh) ***
+    const totalAktion = entries.reduce((sum, e) => {
+        const diesel = Number(e.dieselKosten ?? 0);
+        const eurokw = Number(e.eurokw ?? 0);
+        return sum + (diesel - eurokw);
+    }, 0);
 
     // Ausgabe
     document.getElementById("summary").innerHTML = `
@@ -203,6 +219,13 @@ function renderSummary() {
 
         <p>Diesel‑Diff gesamt: 
             <b>${totalDiffDieselKW.toFixed(2)}</b>
+        </p>
+
+        <hr>
+
+        <!-- NEU: Summe Aktion -->
+        <p>Summe Differenz Diesel € – € kWh: 
+            <b>${totalAktion.toFixed(2)}</b>
         </p>
     `;
 }

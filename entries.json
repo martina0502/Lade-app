@@ -74,4 +74,34 @@
     "dieselKosten": 4.86,
     "diffDieselKW": 1.08
   }
+{
+    "datum": "2026-10-24",
+    "ort": "WAGO",
+    "vor": 17,
+    "nach": 80,
+    "diffProzent": 63,
+    "diffKW": 37.80,
+    "kmvor": 31822,
+    "gefahreneKm": 248,
+    "rechnkw": 46.02,
+    "gesamtMinuten": 277,
+    "eurokw": 9.21,
+    "dieselKosten": 38.89,
+    "diffDieselKW": 29.68
+  }
+{
+    "datum": "2026-10-25",
+    "ort": "Edeka Luebb.Str.CCS",
+    "vor": 56,
+    "nach": 80,
+    "diffProzent": 24,
+    "diffKW": 14.40,
+    "kmvor": 31909,
+    "gefahreneKm": 87,
+    "rechnkw": 17.16,
+    "gesamtMinuten": 25,
+    "eurokw": 8.24,
+    "dieselKosten": 13.64,
+    "diffDieselKW": 5.40
+  }
 ]
