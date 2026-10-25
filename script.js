@@ -10,8 +10,20 @@ let editIndex = null;
 // ---------------------------------------------------------
 async function loadEntries() {
     try {
-        const response = await fetch("entries.json");
-        entries = await response.json();
+        const response = await fetch("entries.json?cb=" + Date.now(), {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("entries.json konnte nicht geladen werden");
+        }
+
+        const data = await response.json();
+        entries = data;
+
         renderTable();
         renderSummary();
     } catch (e) {
