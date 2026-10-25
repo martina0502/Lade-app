@@ -15,6 +15,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            font-size: 12px;
         }
         th, td {
             border: 1px solid #ccc;
@@ -32,6 +33,17 @@
         }
         button {
             margin: 3px;
+            padding: 4px 8px;
+        }
+        input {
+            padding: 4px;
+            margin-bottom: 10px;
+            width: 150px;
+        }
+        .time-input {
+            width: 70px;
+            display: inline-block;
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -43,25 +55,38 @@
 <h3>Neuen Eintrag hinzufügen / bearbeiten</h3>
 
 <label>Datum:</label>
-<input type="date" id="datum"><br><br>
+<input type="date" id="datum"><br>
 
 <label>Ort:</label>
-<input type="text" id="ort"><br><br>
+<input type="text" id="ort"><br>
 
 <label>% vor Ladung:</label>
-<input type="number" id="vor"><br><br>
+<input type="number" id="vor"><br>
 
 <label>% nach Ladung:</label>
-<input type="number" id="nach"><br><br>
+<input type="number" id="nach"><br>
 
 <label>KM vor Ladung:</label>
-<input type="number" id="kmvor"><br><br>
+<input type="number" id="kmvor"><br>
 
-<label>Ladedauer (Minuten):</label>
-<input type="number" id="minuten"><br><br>
+<label>KM nach Ladung:</label>
+<input type="number" id="kmnach"><br>
+
+<label>Gefahrene KM:</label>
+<input type="number" id="gefahrenekm"><br>
+
+<label>Rechn. kW:</label>
+<input type="number" id="rechnkw" step="0.01"><br>
+
+<label>Ladedauer:</label>
+<input type="number" id="stunden" class="time-input" min="0" placeholder="Stunden">
+<input type="number" id="minuten" class="time-input" min="0" max="59" placeholder="Minuten"><br>
 
 <label>€ pro kW:</label>
-<input type="number" id="eurokw" step="0.01"><br><br>
+<input type="number" id="eurokw" step="0.01"><br>
+
+<label>Diesel €:</label>
+<input type="number" id="diesel" step="0.01"><br><br>
 
 <button id="saveBtn" onclick="addNewEntry()">Eintrag speichern</button>
 
@@ -78,13 +103,12 @@
             <th>% nach</th>
             <th>% Diff</th>
             <th>Diff kW</th>
-            <th>KM vor Ladung</th>
+            <th>KM vor</th>
             <th>Gefahrene KM</th>
             <th>Rechn. kW</th>
-            <th>Ladedauer Min.</th>
+            <th>Ladezeit</th>
             <th>€ kW</th>
-            <th>Diesel</th>
-            <th>Diesel-Diff</th>
+            <th>Diesel €</th>
             <th>Aktion</th>
         </tr>
     </thead>
