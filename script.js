@@ -1,3 +1,7 @@
+
+loadEntries();
+
+
 let entries = [];
 let editIndex = null;
 
