@@ -155,14 +155,8 @@ function renderSummary() {
         <h3>Auswertung</h3>
 
         <p>Gesamt gefahrene KM: <b>${totalKm}</b></p>
-        <p>Gesamt Diesel €: <b>${totalDiesel.toFixed(2)}</b></p>
-
-        <hr>
-
-        <p>Summe kWh (geladen): <b>${totalDiffKW.toFixed(2)}</b></p>
-        <p>Summe € kWh: <b>${totalEuroKW.toFixed(2)}</b></p>
-
-        <p>Durchschnittlicher Verbrauch (kWh/100 km): 
+        
+<p>Durchschnittlicher Verbrauch (kWh/100 km): 
             <b>${avgConsumptionKWh.toFixed(2)}</b>
         </p>
 
@@ -170,9 +164,16 @@ function renderSummary() {
             <b>${avgConsumptionEuro.toFixed(2)}</b>
         </p>
 
+        <hr>
+
+        <p>Summe kWh (geladen): <b>${totalDiffKW.toFixed(2)}</b></p>
+        <p>Summe € kWh: <b>${totalEuroKW.toFixed(2)}</b></p>
+
+        
         <p>Gesamtladedauer (Stunden, dezimal): 
             <b>${totalHoursDecimal.toFixed(2)}</b>
         </p>
+<p>Gesamt Diesel €: <b>${totalDiesel.toFixed(2)}</b></p>
 
         <p>Diesel‑Diff gesamt: 
             <b>${totalDiffDieselKW.toFixed(2)}</b>
