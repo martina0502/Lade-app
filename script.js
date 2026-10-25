@@ -7,9 +7,20 @@ let editIndex = null;
 window.addEventListener("DOMContentLoaded", loadEntries);
 
 // ---------------------------------------------------------
-// Daten laden (GitHub Pages kompatibel)
+// Daten laden – zuerst LocalStorage, dann JSON
 // ---------------------------------------------------------
 async function loadEntries() {
+
+    // 1. LocalStorage prüfen
+    const saved = localStorage.getItem("entries");
+    if (saved) {
+        entries = JSON.parse(saved);
+        renderTable();
+        renderSummary();
+        return;
+    }
+
+    // 2. JSON laden, wenn LocalStorage leer ist
     try {
         const response = await fetch("entries.json?cb=" + Date.now(), {
             method: "GET",
@@ -22,6 +33,9 @@ async function loadEntries() {
 
         const data = await response.json();
         entries = Array.isArray(data) ? data : [data];
+
+        // JSON in LocalStorage übernehmen
+        localStorage.setItem("entries", JSON.stringify(entries));
 
         renderTable();
         renderSummary();
@@ -90,6 +104,10 @@ function addNewEntry() {
     };
 
     entries.push(newEntry);
+
+    // SPEICHERN!
+    localStorage.setItem("entries", JSON.stringify(entries));
+
     renderTable();
     renderSummary();
 }
@@ -129,6 +147,7 @@ function renderTable() {
 // Zusammenfassung anzeigen
 // ---------------------------------------------------------
 function renderSummary() {
+
     // Grundsummen
     const totalKm = entries.reduce((sum, e) => sum + (e.gefahreneKm ?? 0), 0);
     const totalDiesel = entries.reduce((sum, e) => sum + Number(e.dieselKosten ?? 0), 0);
@@ -157,8 +176,8 @@ function renderSummary() {
         <h3>Auswertung</h3>
 
         <p>Gesamt gefahrene KM: <b>${totalKm}</b></p>
-        
-<p>Durchschnittlicher Verbrauch (kWh/100 km): 
+
+        <p>Durchschnittlicher Verbrauch (kWh/100 km): 
             <b>${avgConsumptionKWh.toFixed(2)}</b>
         </p>
 
@@ -176,11 +195,12 @@ function renderSummary() {
             <b>${totalEuroKW.toFixed(2)}</b>
         </p>
 
-        
         <p>Gesamtladedauer (Stunden, dezimal): 
             <b>${totalHoursDecimal.toFixed(2)}</b>
         </p>
-<p>Gesamt Diesel €: <b>${totalDiesel.toFixed(2)}</b></p>
+
+        <p>Gesamt Diesel €: <b>${totalDiesel.toFixed(2)}</b></p>
+
         <p>Diesel‑Diff gesamt: 
             <b>${totalDiffDieselKW.toFixed(2)}</b>
         </p>
@@ -192,6 +212,10 @@ function renderSummary() {
 // ---------------------------------------------------------
 function deleteEntry(index) {
     entries.splice(index, 1);
+
+    // SPEICHERN!
+    localStorage.setItem("entries", JSON.stringify(entries));
+
     renderTable();
     renderSummary();
 }
