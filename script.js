@@ -116,7 +116,8 @@ function renderTable() {
             <td>${e.vor}</td>
             <td>${e.nach}</td>
             <td>${e.diff}</td>
-            <td>${e.diffkw.toFixed(2)}</td>
+            <td>${Number(e.diffkw || 0).toFixed(2)}</td>
+
             <td>${e.kmvor}</td>
             <td>${e.gefahreneKm}</td>
             <td>${e.rechnkw}</td>
