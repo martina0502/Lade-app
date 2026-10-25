@@ -133,8 +133,10 @@ function renderSummary() {
     const totalKm = entries.reduce((sum, e) => sum + (e.gefahreneKm ?? 0), 0);
     const totalDiesel = entries.reduce((sum, e) => sum + Number(e.dieselKosten ?? 0), 0);
 
-    // kWh & Euro Summen
-    const totalDiffKW = entries.reduce((sum, e) => sum + Number(e.diffKW ?? 0), 0);
+    // *** KORREKT: Rechn. kWh verwenden ***
+    const totalRechnKW = entries.reduce((sum, e) => sum + Number(e.rechnkw ?? 0), 0);
+
+    // Summe € kWh
     const totalEuroKW = entries.reduce((sum, e) => sum + Number(e.eurokw ?? 0), 0);
 
     // Ladezeit
@@ -144,10 +146,10 @@ function renderSummary() {
     // Diesel-Diff gesamt
     const totalDiffDieselKW = entries.reduce((sum, e) => sum + Number(e.diffDieselKW ?? 0), 0);
 
-    // Durchschnittlicher Verbrauch (kWh/100 km)
-    const avgConsumptionKWh = totalKm > 0 ? (totalDiffKW * 100) / totalKm : 0;
+    // *** Verbrauch kWh/100 km — KORREKT ***
+    const avgConsumptionKWh = totalKm > 0 ? (totalRechnKW * 100) / totalKm : 0;
 
-    // Durchschnittlicher Verbrauch (€ kWh / 100 km)
+    // *** Verbrauch € kWh / 100 km — KORREKT ***
     const avgConsumptionEuro = totalKm > 0 ? (totalEuroKW * 100) / totalKm : 0;
 
     // Ausgabe
@@ -166,15 +168,19 @@ function renderSummary() {
 
         <hr>
 
-        <p>Summe kWh (geladen): <b>${totalDiffKW.toFixed(2)}</b></p>
-        <p>Summe € kWh: <b>${totalEuroKW.toFixed(2)}</b></p>
+        <p>Summe kWh (geladen / Rechn. kWh): 
+            <b>${totalRechnKW.toFixed(2)}</b>
+        </p>
+
+        <p>Summe € kWh: 
+            <b>${totalEuroKW.toFixed(2)}</b>
+        </p>
 
         
         <p>Gesamtladedauer (Stunden, dezimal): 
             <b>${totalHoursDecimal.toFixed(2)}</b>
         </p>
 <p>Gesamt Diesel €: <b>${totalDiesel.toFixed(2)}</b></p>
-
         <p>Diesel‑Diff gesamt: 
             <b>${totalDiffDieselKW.toFixed(2)}</b>
         </p>
