@@ -19,7 +19,14 @@ async function loadEntries() {
             throw new Error("entries.json konnte nicht geladen werden");
         }
 
-        entries = await response.json();
+        const data = await response.json();
+
+        // JSON automatisch in Array umwandeln
+        if (Array.isArray(data)) {
+            entries = data;
+        } else {
+            entries = [data];
+        }
 
         renderTable();
         renderSummary();
