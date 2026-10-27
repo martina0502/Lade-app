@@ -166,7 +166,8 @@ function renderDashboard(
         <div class="card">
 
             <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
-                <img src="icon-192.png" style="width:50px;height:50px;border-radius:10px;">
+                <img src="tacho.svg"
+     style="width:50px;height:50px;">
                 <div>
                     <div style="font-size:18px;font-weight:bold;">
                         Gesamt gefahrene KM
