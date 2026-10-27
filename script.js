@@ -180,6 +180,21 @@ function renderSummary() {
     // Durchschnittlicher Verbrauch (€ kWh / 100 km)
     const avgConsumptionEuro = totalKm > 0 ? (totalEuroKW * 100) / totalKm : 0;
 
+
+
+// Durchschnittliche Reichweite
+const range100 = avgConsumptionKWh > 0
+    ? (66.5 * 100) / avgConsumptionKWh
+    : 0;
+
+const range80 = avgConsumptionKWh > 0
+    ? ((66.5 * 0.8) * 100) / avgConsumptionKWh
+    : 0;
+
+
+
+
+
     // Ausgabe
     document.getElementById("summary").innerHTML = `
         <h3>Auswertung</h3>
@@ -193,6 +208,16 @@ function renderSummary() {
         <p>Durchschnittlicher Verbrauch (€ kWh / 100 km): 
             <b>${avgConsumptionEuro.toFixed(2)}</b>
         </p>
+
+<p>Durchschnittliche Reichweite bei 100% Ladung: 
+<b>${range100.toFixed(0)} km</b><
+/p>
+
+<p>Durchschnittliche Reichweite bei 80% Ladung: 
+<b>${range80.toFixed(0)} km</b>
+</p>
+
+
 
         <hr>
 
