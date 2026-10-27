@@ -361,12 +361,7 @@ function renderMonthlySummary() {
 
                 <h3>${month}</h3>
 
-                <div style="
-                    display:grid;
-                    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-                    gap:15px;
-                ">
-
+               <div class="monthly-grid">
                     <div class="card">
                         <div style="text-align:center;">
                             <img src="tacho.svg"

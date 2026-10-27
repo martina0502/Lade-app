@@ -141,6 +141,26 @@ th {
     margin-top: -8px;
 }
 
+.monthly-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+}
+
+.monthly-grid .card {
+    padding: 12px;
+}
+
+/* Smartphone */
+
+@media (max-width: 768px) {
+
+    .monthly-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
 
 }
 
