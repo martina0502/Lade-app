@@ -1,6 +1,6 @@
 {
-  "name": "Lade-App",
-  "short_name": "Lade-App",
+  "name": "ChargePilot",
+  "short_name": "ChargePilot",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
