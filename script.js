@@ -512,7 +512,7 @@ function renderSummary() {
     renderMonthlySummary();
 
     document.getElementById("summary").innerHTML = `
-        <h2>📈 Auswertung</h2>
+        <h2>📈 Gesamtvergleich Strom - Diesel</h2>
 
         <p>
             <img src="icon-512.png"
