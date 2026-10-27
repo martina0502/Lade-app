@@ -167,9 +167,7 @@ function renderDashboard(
 
             <div style="text-align:center;">
 
-                <img src="tacho.svg"
-                     style="width:40px;height:40px;margin-bottom:10px;">
-
+                <img src="tacho.svg" class="monthly-icon">
                 <h2 style="margin:0;">
                     Gesamt gefahrene KM
                 </h2>
@@ -208,8 +206,7 @@ function renderDashboard(
                 <div class="card">
                     <div style="text-align:center;">
 
-                        <img src="icon-512.png"
-                             style="width:40px;height:40px;margin-bottom:10px;">
+                        <img src="icon-512.png" class="monthly-icon">
 
                         <div><strong>Strom</strong></div>
 
@@ -364,8 +361,7 @@ function renderMonthlySummary() {
                <div class="monthly-grid">
                     <div class="card">
                         <div style="text-align:center;">
-                            <img src="tacho.svg"
-                                 style="width:40px;height:40px;margin-bottom:10px;">
+                            <img src="tacho.svg" class="monthly-icon">
                             <div><strong>Kilometer</strong></div>
                             <div style="font-size:24px;font-weight:bold;">
                                 ${km}
@@ -510,8 +506,7 @@ function renderSummary() {
         <h2>📈 Gesamtvergleich Strom - Diesel</h2>
 
         <p>
-            <img src="icon-512.png"
-                 style="width:20px;height:20px;vertical-align:middle;margin-right:5px;">
+            <img src="icon-512.png" class="monthly-icon">
             <strong>Summe Strom</strong>
         </p>
 
