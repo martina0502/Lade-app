@@ -210,8 +210,8 @@ const range80 = avgConsumptionKWh > 0
         </p>
 
 <p>Durchschnittliche Reichweite bei 100% Ladung: 
-<b>${range100.toFixed(0)} km</b><
-/p>
+<b>${range100.toFixed(0)} km</b>
+</p>
 
 <p>Durchschnittliche Reichweite bei 80% Ladung: 
 <b>${range80.toFixed(0)} km</b>
