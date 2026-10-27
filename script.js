@@ -139,7 +139,7 @@ function renderTable() {
             <td>${minutesToTimeString(e.gesamtMinuten ?? 0)}</td>
             <td>${e.eurokw ?? 0}</td>
             <td>${Number(e.dieselKosten ?? 0).toFixed(2)}</td>
-            <td>${Number(e.diffDieselKW ?? 0).toFixed(2)}</td>
+            
 
             <!-- NEU: Diesel Diff € -->
             <td>${dieselDiffEuro}</td>
@@ -151,6 +151,108 @@ function renderTable() {
         tbody.appendChild(row);
     });
 }
+
+
+function renderDashboard(
+    totalKm,
+    avgConsumptionKWh,
+    avgConsumptionEuro,
+    range100,
+    range80
+) {
+
+    document.getElementById("dashboard").innerHTML = `
+
+        <div class="card">
+
+            <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
+                <img src="icon-192.png" style="width:50px;height:50px;border-radius:10px;">
+                <div>
+                    <div style="font-size:18px;font-weight:bold;">
+                        Gesamt gefahrene KM
+                    </div>
+
+                    <div style="font-size:36px;font-weight:bold;color:#1e3a5f;">
+                        ${totalKm}
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="margin-top:20px;">📊 Durchschnittswerte</h2>
+
+            <div style="
+                display:grid;
+                grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+                gap:15px;
+            ">
+
+                <div class="card">
+                    <div style="text-align:center;">
+
+                        <img src="icon-512.png"
+                             style="width:40px;height:40px;margin-bottom:10px;">
+
+                        <div><strong>Strom</strong></div>
+
+                        <div style="font-size:26px;font-weight:bold;">
+                            ${avgConsumptionKWh.toFixed(2)}
+                        </div>
+
+                        <div>kWh / 100 km</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="text-align:center;">
+
+                        <div style="font-size:40px;">💰</div>
+
+                        <div><strong>Stromkosten</strong></div>
+
+                        <div style="font-size:26px;font-weight:bold;">
+                            ${avgConsumptionEuro.toFixed(2)}
+                        </div>
+
+                        <div>€ / 100 km</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="text-align:center;">
+
+                        <div style="font-size:40px;">🔋</div>
+
+                        <div><strong>Reichweite bei 100 %</strong></div>
+
+                        <div style="font-size:26px;font-weight:bold;">
+                            ${range100.toFixed(0)} km
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="text-align:center;">
+
+                        <div style="font-size:40px;">🔋</div>
+
+                        <div><strong>Reichweite bei 80 %</strong></div>
+
+                        <div style="font-size:26px;font-weight:bold;">
+                            ${range80.toFixed(0)} km
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+
+
+
 
 // ---------------------------------------------------------
 // Zusammenfassung anzeigen
@@ -172,7 +274,13 @@ function renderSummary() {
     const totalHoursDecimal = totalMinutes / 60;
 
     // Diesel-Diff gesamt
-    const totalDiffDieselKW = entries.reduce((sum, e) => sum + Number(e.diffDieselKW ?? 0), 0);
+    const totalDieselDiffEuro = entries.reduce((sum, e) => {
+    return sum + (
+        Number(e.dieselKosten ?? 0)
+        - Number(e.eurokw ?? 0)
+    );
+}, 0);
+
 
     // Durchschnittlicher Verbrauch (kWh/100 km)
     const avgConsumptionKWh = totalKm > 0 ? (totalRechnKW * 100) / totalKm : 0;
@@ -191,54 +299,54 @@ const range80 = avgConsumptionKWh > 0
     ? ((66.5 * 0.8) * 100) / avgConsumptionKWh
     : 0;
 
-
+renderDashboard(
+    totalKm,
+    avgConsumptionKWh,
+    avgConsumptionEuro,
+    range100,
+    range80
+);
 
 
 
     // Ausgabe
     document.getElementById("summary").innerHTML = `
-        <h3>Auswertung</h3>
 
-        <p>Gesamt gefahrene KM: <b>${totalKm}</b></p>
+    <h2>📈 Auswertung</h2>
 
-        <p>Durchschnittlicher Verbrauch (kWh/100 km): 
-            <b>${avgConsumptionKWh.toFixed(2)}</b>
-        </p>
+    <p>
+        <img src="icon-512.png"
+             style="width:20px;height:20px;vertical-align:middle;margin-right:5px;">
+        <strong>Summe Strom</strong>
+    </p>
 
-        <p>Durchschnittlicher Verbrauch (€ kWh / 100 km): 
-            <b>${avgConsumptionEuro.toFixed(2)}</b>
-        </p>
+    <p>
+        ${totalRechnKW.toFixed(2)} kWh |
+        ${totalEuroKW.toFixed(2)} € |
+        ${totalHoursDecimal.toFixed(2)} h
+    </p>
 
-<p>Durchschnittliche Reichweite bei 100% Ladung: 
-<b>${range100.toFixed(0)} km</b>
-</p>
+    <br>
 
-<p>Durchschnittliche Reichweite bei 80% Ladung: 
-<b>${range80.toFixed(0)} km</b>
-</p>
+    <p>
+        ⛽ <strong>Summe Diesel</strong>
+    </p>
 
+    <p>
+        ${totalDiesel.toFixed(2)} €
+    </p>
 
+    <br>
 
-        <hr>
+    <p>
+        💰 <strong>Differenz Diesel</strong>
+    </p>
 
-        <p>Summe kWh (geladen / Rechn. kWh): 
-            <b>${totalRechnKW.toFixed(2)}</b>
-        </p>
+    <p>
+        ${totalDieselDiffEuro.toFixed(2)} €
+    </p>
 
-        <p>Summe € kWh: 
-            <b>${totalEuroKW.toFixed(2)}</b>
-        </p>
-
-        <p>Gesamtladedauer (Stunden, dezimal): 
-            <b>${totalHoursDecimal.toFixed(2)}</b>
-        </p>
-
-        <p>Gesamt Diesel €: <b>${totalDiesel.toFixed(2)}</b></p>
-
-        <p>Diesel‑Diff gesamt: 
-            <b>${totalDiffDieselKW.toFixed(2)}</b>
-        </p>
-    `;
+`;
 }
 
 // ---------------------------------------------------------

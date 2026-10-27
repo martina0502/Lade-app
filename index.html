@@ -6,109 +6,195 @@
     <title>Lade-App</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background: #f7f7f7;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 12px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 6px;
-            text-align: center;
-        }
-        th {
-            background: #eaeaea;
-        }
-        #summary {
-            margin-top: 20px;
-            padding: 15px;
-            background: white;
-            border: 1px solid #ccc;
-        }
-        button {
-            margin: 3px;
-            padding: 4px 8px;
-        }
-        input {
-            padding: 4px;
-            margin-bottom: 10px;
-            width: 150px;
-        }
-        .time-input {
-            width: 70px;
-            display: inline-block;
-            margin-right: 5px;
-        }
-    </style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f7f7f7;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 12px;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 6px;
+        text-align: center;
+    }
+
+    th {
+        background: #eaeaea;
+    }
+
+    #summary {
+        margin-top: 20px;
+        padding: 15px;
+        background: white;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        margin: 3px;
+        padding: 4px 8px;
+    }
+
+    input {
+        padding: 4px;
+        margin-bottom: 10px;
+        width: 150px;
+    }
+
+    .time-input {
+        width: 70px;
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    /* NEU */
+
+    .card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 180px 250px;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .form-grid label {
+        font-weight: bold;
+    }
+
+    .form-grid input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #dashboard {
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        margin-top: 0;
+    }
+
+.title-icon {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    margin-right: 10px;
+    border-radius: 8px;
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+}
+
+
+</style>
 </head>
 
 <body>
 
-<h1>Lade-App</h1>
+<h1>
+    <img src="icon-192.png" class="title-icon">
+    Lade-App
+</h1>
 
-<h3>Neuen Eintrag hinzufügen / bearbeiten</h3>
 
-<label>Datum:</label>
-<input type="date" id="datum"><br>
+<!-- Dashboard -->
+<div id="dashboard"></div>
 
-<label>Ort:</label>
-<input type="text" id="ort"><br>
+<!-- Eingabeformular -->
+<div class="card">
 
-<label>% vor Ladung:</label>
-<input type="number" id="vor"><br>
+    <h2>📝 Neuer Eintrag</h2>
 
-<label>% nach Ladung:</label>
-<input type="number" id="nach"><br>
+    <div class="form-grid">
 
-<label>KM vor Ladung:</label>
-<input type="number" id="kmvor"><br>
+        <label>Datum:</label>
+        <input type="date" id="datum">
 
-<label>Rechn. kW:</label>
-<input type="number" id="rechnkw" step="0.01"><br>
+        <label>Ort:</label>
+        <input type="text" id="ort">
 
-<label>Ladedauer:</label>
-<input type="number" id="stunden" class="time-input" min="0" placeholder="Stunden">
-<input type="number" id="minuten" class="time-input" min="0" max="59" placeholder="Minuten"><br>
+        <label>% vor Ladung:</label>
+        <input type="number" id="vor">
 
-<label>€ kW:</label>
-<input type="number" id="eurokw" step="0.01"><br><br>
+        <label>% nach Ladung:</label>
+        <input type="number" id="nach">
 
-<button id="saveBtn" onclick="addNewEntry()">Eintrag speichern</button>
+        <label>KM vor Ladung:</label>
+        <input type="number" id="kmvor">
 
-<hr>
+        <label>Rechn. kWh:</label>
+        <input type="number" id="rechnkw" step="0.01">
 
-<h3>Alle Ladevorgänge</h3>
+        <label>Stunden:</label>
+        <input type="number" id="stunden" min="0">
 
-<table>
-    <thead>
-        <tr>
-            <th>Datum</th>
-            <th>Ort</th>
-            <th>% vor</th>
-            <th>% nach</th>
-            <th>% Diff</th>
-            <th>Diff kW</th>
-            <th>KM vor</th>
-            <th>Gefahrene KM</th>
-            <th>Rechn. kW</th>
-            <th>Ladezeit</th>
-            <th>€ kW</th>
-            <th>Diesel €</th>
-            <th>Diff Diesel-kwH €</th>
-        </tr>
-    </thead>
-    <tbody id="tableBody"></tbody>
-</table>
+        <label>Minuten:</label>
+        <input type="number" id="minuten" min="0" max="59">
 
-<div id="summary"></div>
+        <label>€ kWh:</label>
+        <input type="number" id="eurokw" step="0.01">
+
+    </div>
+
+    <button id="saveBtn" onclick="addNewEntry()">
+        Eintrag speichern
+    </button>
+
+</div>
+<!-- Tabelle -->
+
+
+<div class="card">
+
+    <h2>📋 Alle Ladevorgänge</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Ort</th>
+                <th>% vor</th>
+                <th>% nach</th>
+                <th>% Diff</th>
+                <th>Diff kW</th>
+                <th>KM vor</th>
+                <th>Gefahrene KM</th>
+                <th>Rechn. kW</th>
+                <th>Ladezeit</th>
+                <th>€ kW</th>
+                <th>Diesel €</th>
+                <th>Diesel Diff €</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody id="tableBody"></tbody>
+
+    </table>
+
+</div>
+
+<!-- Auswertung -->
+<div id="summary" class="card"></div>
 
 <script src="script.js"></script>
+
 
 </body>
 </html>
