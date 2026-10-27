@@ -166,21 +166,29 @@ function renderDashboard(
         <div class="card">
 
             <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
-                <img src="tacho.svg"
-     style="width:40px;height:40px;margin-bottom:10px;">
-                <div>
-                    <div style="font-size:18px;font-weight:bold;">
-                        Gesamt gefahrene KM
-                    </div>
+                
 
-                    <div style="font-size:36px;font-weight:bold;color:#1e3a5f;">
-                        ${totalKm}
-                    </div>
-                </div>
-            </div>
+<img src="tacho.svg"
+     style="width:40px;height:40px;">
 
-            <h2 style="margin-top:20px;">📊 Durchschnittswerte</h2>
+<h2 style="margin:10px 0 0 0;">
+    Gesamt gefahrene KM
+</h2>
 
+<div style="
+    font-size:36px;
+    font-weight:bold;
+    color:#1e3a5f;">
+    ${totalKm}
+</div>
+
+<div style="
+    height:1px;
+    background:#e5e5e5;
+    margin:20px 0;">
+</div>
+
+<h2>📊 Durchschnittswerte</h2>
             <div style="
                 display:grid;
                 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
