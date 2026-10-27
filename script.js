@@ -165,30 +165,40 @@ function renderDashboard(
 
         <div class="card">
 
-            <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
-                
+            <div style="text-align:center;">
 
-<img src="tacho.svg"
-     style="width:40px;height:40px;">
+                <img src="tacho.svg"
+                     style="width:40px;height:40px;margin-bottom:10px;">
 
-<h2 style="margin:10px 0 0 0;">
-    Gesamt gefahrene KM
-</h2>
+                <h2 style="margin:0;">
+                    Gesamt gefahrene KM
+                </h2>
 
-<div style="
-    font-size:36px;
-    font-weight:bold;
-    color:#1e3a5f;">
-    ${totalKm}
-</div>
+                <div style="
+                    font-size:36px;
+                    font-weight:bold;
+                    color:#1e3a5f;
+                    margin-top:10px;
+                ">
+                    ${totalKm}
+                </div>
 
-<div style="
-    height:1px;
-    background:#e5e5e5;
-    margin:20px 0;">
-</div>
+            </div>
 
-<h2>📊 Durchschnittswerte</h2>
+            <div style="
+                height:1px;
+                background:#e5e5e5;
+                margin:20px 0;
+            "></div>
+
+            <h2 style="
+                margin-top:0;
+                margin-bottom:20px;
+                text-align:left;
+            ">
+                📊 Durchschnittswerte
+            </h2>
+
             <div style="
                 display:grid;
                 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
@@ -203,11 +213,15 @@ function renderDashboard(
 
                         <div><strong>Strom</strong></div>
 
-                        <div style="font-size:26px;font-weight:bold;">
+                        <div style="
+                            font-size:26px;
+                            font-weight:bold;
+                        ">
                             ${avgConsumptionKWh.toFixed(2)}
                         </div>
 
                         <div>kWh / 100 km</div>
+
                     </div>
                 </div>
 
@@ -218,11 +232,15 @@ function renderDashboard(
 
                         <div><strong>Stromkosten</strong></div>
 
-                        <div style="font-size:26px;font-weight:bold;">
+                        <div style="
+                            font-size:26px;
+                            font-weight:bold;
+                        ">
                             ${avgConsumptionEuro.toFixed(2)}
                         </div>
 
                         <div>€ / 100 km</div>
+
                     </div>
                 </div>
 
@@ -233,9 +251,13 @@ function renderDashboard(
 
                         <div><strong>Reichweite bei 100 %</strong></div>
 
-                        <div style="font-size:26px;font-weight:bold;">
+                        <div style="
+                            font-size:26px;
+                            font-weight:bold;
+                        ">
                             ${range100.toFixed(0)} km
                         </div>
+
                     </div>
                 </div>
 
@@ -246,20 +268,22 @@ function renderDashboard(
 
                         <div><strong>Reichweite bei 80 %</strong></div>
 
-                        <div style="font-size:26px;font-weight:bold;">
+                        <div style="
+                            font-size:26px;
+                            font-weight:bold;
+                        ">
                             ${range80.toFixed(0)} km
                         </div>
+
                     </div>
                 </div>
 
             </div>
 
         </div>
+
     `;
 }
-
-
-
 
 
 
