@@ -548,45 +548,7 @@ function renderSummary() {
     `;
 }
 
-    // Ausgabe
-    document.getElementById("summary").innerHTML = `
-
-    <h2>📈 Auswertung</h2>
-
-    <p>
-        <img src="icon-512.png"
-             style="width:20px;height:20px;vertical-align:middle;margin-right:5px;">
-        <strong>Summe Strom</strong>
-    </p>
-
-    <p>
-        ${totalRechnKW.toFixed(2)} kWh |
-        ${totalEuroKW.toFixed(2)} € |
-        ${totalHoursDecimal.toFixed(2)} h
-    </p>
-
-    <br>
-
-    <p>
-        ⛽ <strong>Summe Diesel</strong>
-    </p>
-
-    <p>
-        ${totalDiesel.toFixed(2)} €
-    </p>
-
-    <br>
-
-    <p>
-        💰 <strong>Differenz Diesel</strong>
-    </p>
-
-    <p>
-        ${totalDieselDiffEuro.toFixed(2)} €
-    </p>
-
-`;
-}
+    
 
 // ---------------------------------------------------------
 // Eintrag löschen
