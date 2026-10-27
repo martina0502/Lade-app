@@ -332,6 +332,10 @@ function renderMonthlySummary() {
                     0
                 );
 
+
+const euroMonth = euro;
+
+
             const avgKwh =
                 km > 0
                     ? (kwh * 100) / km
@@ -392,6 +396,24 @@ function renderMonthlySummary() {
                             <div>€ / 100 km</div>
                         </div>
                     </div>
+
+<div class="card">
+    <div style="text-align:center;">
+
+        <div style="font-size:40px;">💶</div>
+
+        <div><strong>Stromkosten</strong></div>
+
+        <div style="font-size:24px;font-weight:bold;">
+            ${euroMonth.toFixed(2)}
+        </div>
+
+        <div>€ / Monat</div>
+
+    </div>
+</div>
+
+
 
                     <div class="card">
                         <div style="text-align:center;">
